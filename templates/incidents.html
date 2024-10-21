@@ -1,5 +1,15 @@
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;  
+}
+</style>
 <div class="pt-10" style="display: flex; flex-direction: row;">
-    <div style="width:70%">
+    <div style="width:70%; height: 100vh; overflow-y: scroll;" class="no-scrollbar">
         <h2 class="text-3xl font-bold">Recent Cyber Incidents</h2>
         <div class="mt-4 space-y-4" ng-repeat="incident in incidents">
             <div class="p-4 rounded-lg" style="background-color: #3333339f;">
@@ -8,9 +18,10 @@
                 <p class="mt-2 text-sm text-gray-400">Date: {{incident.date}}</p>
             </div>
         </div>
-       
+
     </div>
-    <div class="p-12">
-        <input type="text" class="searc">
+    <div class="p-12" style="display: flex;  height: 8.8rem;">
+    <input type="text;" style="background-color: #333; font-size: 1.1rem ; padding: .3rem; color: white;">
+    <button style="background-color: #333; border: 2px solid rgb(36, 35, 35); padding: .4rem; font-size: 1.1rem;">Search</button>
     </div>
 </div>
