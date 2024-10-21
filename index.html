@@ -47,7 +47,10 @@
                 <a ui-sref="contact" ui-sref-active="active" class="d-flex  fs-4 align-items-center gap-3 text-decoration-none text-white"><i class="fas fa-envelope"></i><span class="ml-2">Contact</span></a>
             </ul>
         </nav>
+
         <div class="content flex-1 px-10 w-100" ng-class="{'md:ml-64': !isSidebarHidden}">
+        <div class="flex-1 px-10" ng-class="{'md:ml-64': !isSidebarHidden}">
+
             <div ui-view></div>
         </div>
     </div>
