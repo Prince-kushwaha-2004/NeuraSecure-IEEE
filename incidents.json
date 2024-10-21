@@ -1,0 +1,40 @@
+{
+    "incidents": [
+      {
+        "title": "Ransomware Attack on Indian Bank",
+        "description": "A major ransomware attack targeted a leading Indian bank, causing downtime of several key services.",
+        "date": "2024-10-10"
+      },
+      {
+        "title": "Data Breach in Telecom Sector",
+        "description": "Sensitive customer data from a large telecom provider was leaked on the dark web following a breach.",
+        "date": "2024-10-05"
+      },
+      {
+        "title": "Phishing Campaign Targets Government Officials",
+        "description": "A phishing campaign aimed at government officials was detected, attempting to steal sensitive login credentials.",
+        "date": "2024-09-30"
+      },
+      {
+        "title": "Cyber Attack on Major Bank in India",
+        "date": "2024-10-10",
+        "description": "A major bank in India experienced a cyber attack, compromising customer data."
+    },
+    {
+        "title": "Ransomware Attack Targeting Hospitals",
+        "date": "2024-10-15",
+        "description": "Several hospitals in India were targeted by a ransomware group, disrupting services."
+    },
+    {
+        "title": "Phishing Scams on the Rise",
+        "date": "2024-10-18",
+        "description": "Authorities warn of increasing phishing scams targeting individuals and businesses."
+    },
+    {
+        "title": "Data Breach in E-Commerce Platform",
+        "date": "2024-10-19",
+        "description": "A popular e-commerce platform reported a data breach, affecting thousands of customers."
+    }
+    ]
+  }
+  

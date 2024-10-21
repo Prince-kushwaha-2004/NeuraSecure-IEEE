@@ -1,0 +1,16 @@
+<div class="pt-10" style="display: flex; flex-direction: row;">
+    <div style="width:70%">
+        <h2 class="text-3xl font-bold">Recent Cyber Incidents</h2>
+        <div class="mt-4 space-y-4" ng-repeat="incident in incidents">
+            <div class="p-4 rounded-lg" style="background-color: #3333339f;">
+                <h3 class="text-xl font-bold">{{incident.title}}</h3>
+                <p class="mt-2">{{incident.description}}</p>
+                <p class="mt-2 text-sm text-gray-400">Date: {{incident.date}}</p>
+            </div>
+        </div>
+       
+    </div>
+    <div class="p-12">
+        <input type="text" class="searc">
+    </div>
+</div>
