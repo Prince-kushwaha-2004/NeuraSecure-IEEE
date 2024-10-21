@@ -28,29 +28,32 @@
 }
 </style>
 <div>
-   <div class="nav2">
+   <div class="nav2 ">
     <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" style="background-color: #333;">Register</button>
    <a href="/templates/login.html"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" style="background-color: #333;">Login</button></a> 
    </div>
-    <h1 class="text-3xl font-bold mb-4">Cybersecurity Threats in India</h1>
-    <p class="mb-4">The following graphs represent the current state of cybersecurity threats and incidents in India, highlighting various statistics and trends.</p>
+    <h1 class="text-3xl font-bold mb-4 p-2">Cybersecurity Threats in India</h1>
+    <p class="mb-4 p-2">The following graphs represent the current state of cybersecurity threats and incidents in India, highlighting various statistics and trends.</p>
+    <div class="d-flex flex-column">
+          <div class="d-flex ">
+            <div id="chart1" class="d-flex w-50">
+
+            </div>
+            <div id="chart2" class="d-flex w-50">
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-            <canvas id="threatsChart"></canvas>
-        </div>
-        <div>
-            <canvas id="incidentsChart"></canvas>
-        </div>
+            </div>
+
+          </div>
+          <div class="d-flex">
+            <div id="chart3" class="d-flex">
+    
+            </div>
+            
+          </div>
+        
+
     </div>
-    <div class="mt-8">
-        <h2 class="text-2xl font-bold">Latest News</h2>
-        <div class="overflow-hidden h-60 border-t border-gray-600">
-            <ul id="news-ticker" class="news-ticker">
-                <li ng-repeat="incident in incidents">
-                    <strong>{{ incident.date }}: </strong> {{ incident.title }} - {{ incident.description }}
-                </li>
-            </ul>
-        </div>
-    </div>
+
+
+   
 </div>

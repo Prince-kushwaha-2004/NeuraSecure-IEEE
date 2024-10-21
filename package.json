@@ -3,6 +3,7 @@
   "version": "",
   "dependencies": {
     "angular": "^1.8.2",
+    "apexcharts": "^3.54.1",
     "ui-router": "^1.0.0-alpha.3"
   }
 }
