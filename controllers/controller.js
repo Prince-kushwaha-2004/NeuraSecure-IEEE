@@ -1,4 +1,5 @@
-app.controller('MainController', function($scope) {
+ const baseURL="https://10.21.97.82:8888/NeuraSecure"
+app.controller('MainController', function($scope,$http) {
     $scope.isSidebarHidden = false;
 
     $scope.toggleSidebar = function() {
@@ -23,23 +24,138 @@ app.controller('MainController', function($scope) {
             requestAnimationFrame(scroll);
         }pe.isSidebarHidden;
     };
+    $scope.logout=function(){
+      console.log("logout")
+      var req = {
+        method: 'POST',
+        url: `${baseURL}/logout/`,
+        withCredentials:true,
+    }
+    $http(req).then(function (response) {
+      $scope.user = null;
+      console.log(response.data)
+
+    }, function (err) {
+      console.log(err)
+    });
+
+      
+    }
+    authenticate=function(){
+      var req = {
+        method: 'GET',
+        url: `${baseURL}/login_det/`,
+        withCredentials:true,
+    }
+    $http(req).then(function (response) {
+      $scope.user = response.data.user;
+      console.log( $scope.user)
+    }, function (err) {
+      console.log(err)
+      $scope.user=null
+    });
+  }
+     authenticate()
 });
 
-app.controller('IncidentsController', function($scope, $http) {
-    $http.get('incidents.json').then(function(response) {
-        $scope.incidents = response.data.incidents;
+app.controller('IncidentsController', function($scope, $http, $timeout) {
+  getdata=function(){
+    var  getrequest= {
+      method:"GET",
+      url:`${baseURL}/list_top`
+
+    }
+    $http(getrequest).then((res)=>{
+      console.log(res.data.top_categories)
+      $scope.trending = res.data.top_categories
+     
+    })
+    angular.element(document).ready(function () {
+      AOS.init();  // Initialize AOS
+  });
+    $http.get(`${baseURL}/list_data/`,{withCredentials:true}).then(function(response) {
+      $scope.incidents2 = response.data.list;
+      $scope.allincident=$scope.incidents2;
+      console.log( response.data)
+  });
+  
+  }
+  getdata()
+   authenticate=function(){
+    var req = {
+      method: 'GET',
+      url: `${baseURL}/login_det/`,
+      withCredentials:true,
+  }
+  $http(req).then(function (response) {
+    $scope.user = response.data.user;
+    console.log( $scope.user)
+  }, function (err) {
+    console.log(err)
+    $scope.user=null
+  });
+}
+   authenticate()
+  $scope.showMore = [];
+
+$scope.toggleReadMore = function(index) {
+    $scope.showMore[index] = !$scope.showMore[index];
+};
+$scope.filter=function(category){
+  console.log("hii")
+  if(category=="all"){
+    $scope.incidents2= $scope.allincident;
+  }else{
+    $scope.incidents2=$scope.allincident.filter((value)=>{
+      return value.category==category
+    })
+  }
+ 
+}
+$scope.like=function(id){
+  if(!$scope.user){
+    location.assign('http://10.21.98.101:5500/templates/login.html')
+  }else{
+    console.log(id)
+    var req = {
+      method: 'PATCH',
+      url:`${baseURL}/data_status/`,
+      withCredentials:true,
+      headers: {
+        'Content-Type': "application/json",
+      },
+      data:{
+        "id":id
+      }
+     }
+     $http(req).then(function(responce){
+      console.log(responce)
+      var req = {
+        method: 'GET',
+        url: `${baseURL}/list_data/`,
+        withCredentials:true,
+    }
+    $http(req).then(function (response) {
+      $scope.incidents2 = response.data.list;
+      $scope.allincident=$scope.incidents2;
+      console.log( response.data)
+    }, function (err) {
+      console.log(err)
     });
+    });
+    
+  }
+}
+
 });
 app.controller('HomeController', function($scope,$http) {
-
-
       
     var options1 = {
         series: [{
-        name: 'series1',
+        name: ' scrap data',
         data: [31, 40, 28, 51, 42, 109, 100]
       }, {
-        name: 'series2',
+        name: ' final insight',
         data: [11, 32, 45, 32, 34, 52, 41]
       }],
         chart: {
@@ -68,15 +184,12 @@ app.controller('HomeController', function($scope,$http) {
     
       var options2 = {
         series: [{
-        name: 'Net Profit',
+        name: 'Aware People',
         data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
       }, {
-        name: 'Revenue',
+        name: 'Affected Case',
         data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-      }, {
-        name: 'Free Cash Flow',
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-      }],
+      },],
         chart: {
         type: 'bar',
         height: 350
@@ -101,7 +214,7 @@ app.controller('HomeController', function($scope,$http) {
       },
       yaxis: {
         title: {
-          text: '$ (thousands)'
+          text: ' (thousands) people'
         }
       },
       fill: {
@@ -116,50 +229,74 @@ app.controller('HomeController', function($scope,$http) {
       }
       };
 
+
       var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
       chart2.render();
 
-      var options3 = {
-        series: [42, 47, 52, 58, 65],
-        chart: {
-        width: 380,
-        type: 'polarArea'
-      },
-      labels: ['Rose A', 'Rose B', 'Rose C', 'Rose D', 'Rose E'],
-      fill: {
-        opacity: 1
-      },
-      stroke: {
-        width: 1,
-        colors: undefined
-      },
-      yaxis: {
-        show: false
-      },
-      legend: {
-        position: 'bottom'
-      },
-      plotOptions: {
-        polarArea: {
-          rings: {
-            strokeWidth: 0
-          },
-          spokes: {
-            strokeWidth: 0
-          },
-        }
-      },
-      theme: {
-        monochrome: {
-          enabled: true,
-          shadeTo: 'light',
-          shadeIntensity: 0.6
-        }
-      }
-      };
+      
+      var  getrequest= {
+        method:"GET",
+        url:`${baseURL}/list_top`
 
-      var chart3 = new ApexCharts(document.querySelector("#chart3"), options3);
-      chart3.render();
+      }
+      var seriresArray = []
+      var categoryArray = []
+      $http(getrequest).then((res)=>{
+        console.log(res.data.top_categories)
+       
+
+        res.data.top_categories.forEach((element)=>{
+          console.log(element)
+          seriresArray.push(element.post_count)
+          categoryArray.push(element.category_name)
+          
+        })
+        console.log(seriresArray)
+
+        var options3 = {
+          series: seriresArray,
+          chart: {
+          width: 380,
+          type: 'polarArea'
+        },
+        labels: categoryArray,
+        fill: {
+          opacity: 1
+        },
+        stroke: {
+          width: 1,
+          colors: undefined
+        },
+        yaxis: {
+          show: false
+        },
+        legend: {
+          position: 'bottom'
+        },
+        plotOptions: {
+          polarArea: {
+            rings: {
+              strokeWidth: 0
+            },
+            spokes: {
+              strokeWidth: 0
+            },
+          }
+        },
+        theme: {
+          monochrome: {
+            enabled: true,
+            shadeTo: 'light',
+            shadeIntensity: 0.6
+          }
+        }
+        };
+  
+        var chart3 = new ApexCharts(document.querySelector("#chart3"), options3);
+        chart3.render();
+      })
+
+      
 
 
       var options4 = {
@@ -189,7 +326,7 @@ app.controller('HomeController', function($scope,$http) {
         }
       },
       title: {
-        text: 'Forecast',
+        text: 'Scarp Data',
         align: 'left',
         style: {
           fontSize: "16px",
@@ -213,7 +350,21 @@ app.controller('HomeController', function($scope,$http) {
       var chart4 = new ApexCharts(document.querySelector("#chart4"), options4);
       chart4.render();
      
-    
+      authenticate=function(){
+        var req = {
+          method: 'GET',
+          url: `${baseURL}/login_det/`,
+          withCredentials:true,
+      }
+      $http(req).then(function (response) {
+        $scope.user = response.data.user;
+        console.log( $scope.user)
+      }, function (err) {
+        console.log(err)
+        $scope.user=null
+      });
+    }
+       authenticate()
 
     
 });

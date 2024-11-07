@@ -12,26 +12,61 @@
     border: none;
 }
 </style>
-<div class="pt-5 " style="display: flex; flex-direction: row;">
+<div class="pt-5 d-flex flex-column flex-sm-row">
     <div style="height: 100vh; overflow-y: scroll;" class="no-scrollbar">
         <h2 class="fs-1 px-5">Recent Cyber Incidents</h2>
-        <div class="px-5 d-flex flex-column gap-3" ng-repeat="incident in incidents">
-            <div class="p-4 rounded-4 mt-3" style="background-color: #3333339f;">
-                <h3 class="">{{incident.title}}</h3>
-                <p class="mt-2">{{incident.description}}</p>
-                <p class="mt-2 ">Date: {{incident.date}}</p>
-            </div>
+        <div ng-show="!result.length">
+            <h1 class="text-secondary text-center ps-5 mt-5" style="width: 62.5rem;">No data</h1>
         </div>
 
+        <div class="px-5 d-flex flex-column gap-3" ng-repeat="incident in incidents2 | filter:search as result">
+            
+            <div class="p-4 rounded-4 mt-3 " style="background-color: #3333335d;" >
+                <div class="fs-4 d-flex flex-row justify-content-between gap-5">
+                    <h3 class="text-info">{{incident.title}}</h3>
+                    <!-- <i class="fa-solid fa-bookmark"></i> -->
+                </div>
+                
+                <p><i class="fa-regular fa-circle-dot"></i> {{incident.category}}</p>
+                    
+                <p class="mt-2">
+                    {{ incident.info | limitTo: showMore[$index] ? incident.info.length : 353 }}
+                    <a href="" ng-click="toggleReadMore($index)" class="text-decoration-none text-info">
+                        {{ showMore[$index] ? 'Read Less' : '.. Read More' }}
+                    </a>
+                </p>
+    
+                <div class="icons d-flex justify-content-between align-items-center fs-4">
+                    <div class="d-flex gap-3">
+                        
+                        <i class="fa-heart fa-regular d-flex gap-2 align-items-center" type="button" id="like{{incident.id}}"  ng-class="{'fa-solid text-danger':{{incident.is_like}}}" ng-click="like(incident.id)"><p class="fs-6 mb-0">{{incident.likes}}</p></i>
+                        <i class="bi bi-chat"></i>
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <a href="{{incident.link}}" class="fs-6 m-0 p-0 text-decoration-none text-info">{{"Source"}}</a>
+                        <p class=" fs-6 text-secondary m-0 p-0">{{incident.date}}</p>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    
     </div>
-    <div class="d-flex flex-column" style=" margin-top: 5rem;">
+
+    </div>
+    <div class="d-sm-flex flex-sm-column d-none" style=" margin-top: 5rem;">
         <div class="search d-flex align-items-center rounded-2 overflow-hidden" style="height: 2.5rem; background-color: #333;">
-            <input type="text" class="fs-5 text-white px-3" style="background-color: transparent; border: none;" placeholder="Search">
-            <div class="bg-primary m-0 p-0">
-            <button class="btn text-white" style="background-color:transparent;">Search</button>
-             </div>
+            <input type="text" class="fs-5 text-white px-3" style="background-color: transparent; border: none;" ng-model="search" placeholder="Search">
+            <!-- <div class=" m-0 p-0">
+            <button class="btn btn-outline-info" >Search</button>
+             </div> -->
         </div>  
-        <div class="h-50 mt-5 rounded-4" style="background-color: #333;">
+        <div class=" mt-5 px-5 py-3 rounded-4" style="background-color: #3333335d;">
+          <p class="fs-5 fw-bold">Trending's</p>
+          <p class="fs-6 text-info d-flex justify-content-between" type="button" ng-click="filter('all')">#All <span class="text-white"></span></p>
+
+          <p class="fs-6 text-info d-flex justify-content-between" ng-repeat="item in trending" type="button" ng-click="filter(item.category_name)">#{{item.category_name}} <span class="text-white">{{item.post_count}}</span></p>
           
         </div>
     </div>
